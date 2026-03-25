@@ -13,7 +13,6 @@ struct RaceCar {
 int main() {
     int n;
 
-    cout << "Ingresa la cantidad de autos, luego la grilla final: " << endl;
     while (cin >> n && n != 0) {
         bool isPosible = true;
         vector<RaceCar> finishers(n);
