@@ -5,6 +5,8 @@
 #include <string>
 using namespace std; 
 
+// URL: https://onlinejudge.org/external/100/10038.pdf
+
 const int MAX_SIZE = 3000;
 string jollyjumper(const vector<int>& sequence) {
     int length = (int) sequence.size();

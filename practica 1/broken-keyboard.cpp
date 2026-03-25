@@ -4,6 +4,7 @@
 
 using namespace std;
 
+// URL: https://onlinejudge.org/external/119/11988.pdf
 int main() {
     string text;
 

@@ -3,6 +3,8 @@
 #include <cmath>
 using namespace std; 
 
+// URL: https://onlinejudge.org/external/100/10038.pdf
+
 const int MAX_SIZE = 3000;
 string jollyjumper(int length, int sequence[]) {
   if (length == 1) return "Jolly Jumper";
@@ -32,17 +34,15 @@ string jollyjumper(int length, int sequence[]) {
 int main() {
     int length;
 
-    cout << "PASO 1: Ingrese el largo: " << endl; 
     if (!(cin >> length)) return 0;
 
     int* nums = new int[length];
     
-    cout << "PASO 2: Ingrese los " << length << " numeros: " << endl;
     for (int i = 0; i < length; i++) {
         cin >> nums[i];
     }
     
-    cout << "RESULTADO: " << jollyjumper(length, nums) << endl;
+    cout << jollyjumper(length, nums) << endl;
     
     delete[] nums;
     return 0;

@@ -10,6 +10,7 @@ struct RaceCar {
 };
 
 
+// URL: https://onlinejudge.org/external/121/12150.pdf
 int main() {
     int n;
 
