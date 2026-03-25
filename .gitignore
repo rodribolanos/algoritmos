@@ -1,0 +1,18 @@
+# Ejecutables de Windows
+*.exe
+
+# Ejecutables de Linux/macOS (si llegas a compilar ahí)
+main
+programa
+temp
+
+# Archivos de objetos y librerías (generados por el compilador)
+*.o
+*.obj
+*.out
+
+# Carpetas de configuración de VS Code
+.vscode/
+
+# Archivos temporales de compilación
+*.stackdump
