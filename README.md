@@ -1,4 +1,4 @@
-# algoritmos
+# Algoritmos
 Repositorio dedicado a la materia Algoritmos de la Universidad Nacional de Quilmes.
 2026S1
 
