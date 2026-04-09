@@ -1,5 +1,7 @@
 #include <iostream>
 #include <list>
+#include <cmath>
+
 using namespace std; 
 
 int MAX_TEST_CASES = 10;
@@ -15,10 +17,11 @@ int main() {
 
     while (cin >> P >> C and (P!= 0 and C != 0)) {
         bool flag = true;
-        list<int> cola(P);
+        list<int> cola;
         cases++;
 
-        for (int p = 1; p <= P; p++) {
+        int limite = min(C, P);
+        for (int p = 1; p <= limite; p++) {
             cola.push_back(p);
         }
 
@@ -29,7 +32,7 @@ int main() {
             if (command == 'N') {
                 if (flag) cout << "Case " << cases << ":" << "\n";
                 flag = false;
-                int number = *cola.begin();
+                int number = cola.front();
                 cout << number << "\n";
                 cola.pop_front();
                 cola.push_back(number);
@@ -43,3 +46,6 @@ int main() {
     }
     return 0;
 }
+
+
+// errores que tuve: inicialice la lista con el constructor que recibe un tamanio N. eso te crea N elementos con valor default >:c
