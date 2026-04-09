@@ -5,45 +5,43 @@ using namespace std;
 
 // URL: https://onlinejudge.org/external/100/10038.pdf
 
-const int MAX_SIZE = 3000;
-string jollyjumper(int length, int sequence[]) {
-  if (length == 1) return "Jolly Jumper";
+bool esJolly(int n, const vector<int>& secuencia) {
+if (n <= 0) return false;
+    if (n == 1) return true;
 
-  bool isJolly = true;
-  bool seenDifferences[MAX_SIZE] = {false};
-  
-  for (int i = 0; i < length - 1; i++) {
-    int actualDifference = abs(sequence[i] - sequence[i + 1]);
-    if (actualDifference >= 1 && actualDifference < length && actualDifference < MAX_SIZE) {
-      // si la diferencia es mayor al tamanio maximo no cumple con todos n a n-1, cuando el max size de n es limitado.
-      seenDifferences[actualDifference] = true;
+    // Usamos n elementos para que los índices 1 a n-1 sean válidos
+    vector<bool> diferenciasVistas(n, false);
+    int conteoUnicos = 0;
+
+    for (int i = 0; i < n - 1; i++) {
+        int diff = abs(secuencia[i] - secuencia[i + 1]);
+
+        // La diferencia debe estar entre 1 y n-1
+        if (diff >= 1 && diff <= n - 1) {
+            if (!diferenciasVistas[diff]) {
+                diferenciasVistas[diff] = true;
+                conteoUnicos++;
+            }
+        }
     }
-  }
 
-  for (int dif = 1; dif < length; dif++) {
-    // comenzar de 1 para que 
-    if (!seenDifferences[dif]) {
-      isJolly = false;
-      break;
-    }
-  }
-
-  return (isJolly) ? "Jolly Jumper" : "Not Jolly Jumper";
+    // Es Jolly si encontramos todas las diferencias posibles (n-1)
+    return conteoUnicos == (n - 1);
 }
 
 int main() {
-    int length;
+    int n;
+    while (cin >> n) {
+        vector<int> secuencia(n);
+        for (int i = 0; i < n; i++) {
+            cin >> secuencia[i];
+        }
 
-    if (!(cin >> length)) return 0;
-
-    int* nums = new int[length];
-    
-    for (int i = 0; i < length; i++) {
-        cin >> nums[i];
+        if (esJolly(n, secuencia)) {
+            cout << "Jolly" << endl;
+        } else {
+            cout << "Not jolly" << endl;
+        }
     }
-    
-    cout << jollyjumper(length, nums) << endl;
-    
-    delete[] nums;
     return 0;
 }

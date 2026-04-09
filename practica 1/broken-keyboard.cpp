@@ -20,7 +20,7 @@ int main() {
                 it = outText.end();
             } else {
                 it = outText.insert(it, c);
-                it++;
+                it++; // mueve el it a la nueva posicion a insertar. idem advance(it, 1);
             }
         }
         

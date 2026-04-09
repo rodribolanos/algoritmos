@@ -62,9 +62,6 @@ int main() {
 
         // si es palindromo, nada para hacer
         if(l >= r) {
-#ifndef SUBMIT
-            assert(s == string(s.rbegin(), s.rend()));
-#endif
             cout << s << '\n';
             continue;
         }
