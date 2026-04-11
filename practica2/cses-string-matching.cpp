@@ -22,7 +22,8 @@ using namespace std;
 //- todos los valores de z[:i] ya fueron calculados
 //- r es el maximo tal que z[l] + l + 1= r para l > 0 (para l = 0, usamos  r = 1)
 vector<int> zarray(const string& s) {
-    vector<int> z(s.size(),s.size());
+    vector<int> z(s.size(), 0);
+    z[0] = -1;
     for(int l = 0, i = 1, r = 1; i < s.size(); ++i) {
         if((z[i] = min(z[i-l], r-i)) < r-i) continue;
         for(l = i; r < s.size() and s[r-l] == s[r]; ++r);

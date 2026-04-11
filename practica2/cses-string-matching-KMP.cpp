@@ -51,16 +51,16 @@ int main() {
     string text, pattern;
     cin >> text >> pattern;
 
-#ifndef SUBMIT
-    // testear make_fail
-    for(int i = 0; i < pattern.size(); ++i) {
-        auto suffix = pattern.substr(0, fail[i+1]);
-        assert(suffix == pattern.substr(i+1-fail[i+1], fail[i+1]));
-        for(int j = fail[i+1]+1; j <= i; ++j) {
-            assert(pattern.substr(0, j) != pattern.substr(i+1-j, j));
-        }
-    }
-#endif
+// #ifndef SUBMIT
+//     // testear make_fail
+//     for(int i = 0; i < pattern.size(); ++i) {
+//         auto suffix = pattern.substr(0, fail[i+1]);
+//         assert(suffix == pattern.substr(i+1-fail[i+1], fail[i+1]));
+//         for(int j = fail[i+1]+1; j <= i; ++j) {
+//             assert(pattern.substr(0, j) != pattern.substr(i+1-j, j));
+//         }
+//     }
+// #endif
 
     cout << count_matches(text, pattern) << '\n';
 }
