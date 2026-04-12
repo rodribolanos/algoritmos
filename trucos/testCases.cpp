@@ -5,6 +5,7 @@
 int main() {
     int testCases;
 
+    cin >> testCases;
     while(testCases--) {
         cout << hacerAlgo();
         if testCases != 1 cout << "\n"
