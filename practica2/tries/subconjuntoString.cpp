@@ -18,6 +18,18 @@ struct Trie {
       : tree(1) //nodo raiz sin elementos
     { }
 
+    bool lookUpIterative(const string& s) {
+    size_t curr = 0;
+    for (char c : s) {
+        auto it = tree[curr].children.find(c);
+        if (it == tree[curr].children.end()) return false;
+        curr = it->second;
+    }
+    return tree[curr].isEnd;
+}
+
+    // i es la letra actual del string s, por defecto la primera. 
+    // n es el vector actual donde estoy buscando, por defecto, root
     bool lookUp(const string& s, size_t i = 0, size_t n = 0) {
         if (i == s.size()) {
             // si llegue al final de la palabra que buscaba, tengo que fijarme si es una palabra final en el trie
