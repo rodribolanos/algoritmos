@@ -114,11 +114,9 @@ int main() {
 
         cout << "Set " << t + 1 << ": ";
         if (fail) {
-            cout << "Not possible.";
+            cout << "Not possible.\n";
         } else {
-            cout << hits << ".";
+            cout << hits << ".\n";
         }
-
-        if (t + 1 != testCases) cout << "\n";
     }
 }

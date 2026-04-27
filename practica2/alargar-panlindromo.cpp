@@ -15,6 +15,7 @@ vector<int> zarray(const string& s) {
         if(r == i) ++r;
     }
     return z;
+    
 }
 
 

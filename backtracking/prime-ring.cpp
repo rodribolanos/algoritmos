@@ -1,14 +1,11 @@
 #include <iostream>
 #include <vector> 
+#include <list> 
 
 using namespace std;
-/*
-IDEA: Tengo una lista de numeros, tengo que en primera instancia agarrar uno mas, y ver si es posible la solucion.
-En este caso no podria tomar el agarrar o no agarrar el numero, porque si tengo n numeros, los casos validos tambien tienen
-n numeros
-*/
 
 vector<int> nums; 
+// solucion con funcion isPrime que tarda O(n)
 
 bool isPrime(int n) {
     // O(n)
@@ -26,37 +23,74 @@ bool isPrime(int n) {
     return true;
 }
 
-void primeRing(int size, vector<int> accumulate, int ind = 0) {
-    if (accumulate.size() == size) {
-        for (int num : accumulate) {
-            cout << num << " " << "\n";
+void printVector(vector<int> vec) {
+    for (int n : vec) {
+        cout << n << " ";
+    }
+}
+
+// solucion con tabla de primos, tarda O(n), pero consulta en O(1)
+vector<bool> primes;
+/* 
+IDEA: Usar una lista de acumulados para ir acumulando el resultado parcial.
+Un vector de booleanos de n posiciones para marcar en la solucion actual que numeros fueron usados
+Si la solucion actual uso el 1, 2. used se veria F T T F F F
+*/
+/*
+PRECONDICION: Llamar a la funcion con un accumulate[0] = 0, para que no influya en la suma y poder usar front()
+used debe ser un vector de n + 1 booleanos todos que comiencen en false
+*/
+void primeRing(vector<int>& accumulate, vector<bool>& used) {
+    vector<vector<int>> solve;
+    if (accumulate.size() == used.size() - 1) {
+        if (primes[accumulate.back() + accumulate[0]]) {    
+            printVector(accumulate);
+            cout << "\n";
         }
         return;
     }
+    
 
-    // recorro solo la cantidad de caracteres restantes, si tengo 7 en size y 2 acumulados, solo puedo ver 5 opciones
-    for (int i = 0; i < size - accumulate.size(); i++) {
-        int actualNum = nums[ind];
-        int nextNum = nums[ind + 1 % size]
-        if (isPrime(nums[ind] + nums[ind + 1 % size])) {
-            primeRing(size, accumulate.push_back)
+    for (int i = 2; i < used.size(); i++) {
+        if (!used[i] && primes[accumulate.back() + i]) {
+            used[i] = true;
+            accumulate.push_back(i);
+            primeRing(accumulate, used);
+            // tengo que volver a marcar used[i] en false para la proxima llamada
+            used[i] = false;
+            accumulate.pop_back();
         }
     }
-
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
-    int n; cin >> n;
+    int n;
     int cases = 0;
+    int MAX_SUMS = 32;
+    primes.assign(MAX_SUMS, true);
+    primes[0] = false;
+    primes[1] = false;
+    // completar tabla de primes
+    for (int i = 2; i < MAX_SUMS; i++) {
+        if (primes[i]) {
+            for (int k = 2; k*i < MAX_SUMS; k++) {
+                primes[k*i] = false;
+            }
+        }       
+    }
     while (cin >> n) {
         cases++;
-        for (int i = 1; i <= n; i++) {
-            nums.push_back(i);
-        }
+        // asigno todos en true para empezar
+        vector<int> accumulated;
+        vector<bool> used(n + 1, false);
+        accumulated.push_back(1);
+        used[1] = true;
 
+        cout << "Case " << cases << ": \n";
+        primeRing(accumulated, used);
     }
-
+    return 0;
 }

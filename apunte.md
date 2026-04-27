@@ -19,7 +19,7 @@ vector<tipo> referencia(n, p);
 crea un array dinamico de tamanio n, con todos los valores seteados en p.
 
 vector<tipo> referencia(n);
-
+    
 crea un array dinamico de tamanio n.
 
 Operaciones y Complejidad:
