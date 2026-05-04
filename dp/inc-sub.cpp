@@ -11,6 +11,6 @@ int main() {
     nums.resize(n);
     for (int i = 0; i < n; i++) {
         int k; cin >> k;
-
+        nums[i] = 
     }
 }
