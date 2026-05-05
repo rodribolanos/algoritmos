@@ -20,15 +20,14 @@ using namespace std;
 const long NEG_INF = -1e7;
 int NIL = -1;
 
-class Solver { 
+class CdSolver { 
     vector<vector<long>> M;
-    vector<long> v, p;
+    vector<long> ls;
 
 public: 
-    Solver(const vector<long>& vals,const vector<long>& pesos, long k)
-        :  v(vals),
-        p(pesos), 
-        M(vals.size() + 1, vector<long>(k + 1, NIL))
+    CdSolver(const vector<long>& lengths, long time)
+        :  ls(lengths),
+        M(lengths.size() + 1, vector<long>(time + 1, NIL))
     {}
 
     long get_value(size_t i, long j) {
@@ -37,7 +36,7 @@ public:
 
         if (M[i][j] == NIL) {
             M[i][j] = max(get_value(i-1, j), 
-                                v[i-1] + get_value(i-1, j - p[i - 1]));
+                                ls[i-1] + get_value(i-1, j - ls[i - 1]));
         }
 
         return M[i][j];
@@ -52,7 +51,7 @@ public:
         if (get_value(i, j) == get_value(i-1, j))
             return get_solution(i-1, j);
         // sino lo agarro
-        auto s = get_solution(i-1, j - p[i - 1]);
+        auto s = get_solution(i-1, j - ls[i - 1]);
         s.push_back(i-1);
         return s;
     }
@@ -63,21 +62,21 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
-    
-    size_t n, k;
-    cin >> n >> k;
 
-    vector<long> v(n);
-    vector<long> p(n);
+    size_t k, n;
+    while (cin >> k && cin >> n) {
+        vector<long> v(n);
 
-    for (auto& i : v) cin >> i;
-    for (auto& i : p) cin >> i;
+        for (auto& i : v) cin >> i;
 
-    auto solver = Solver(v, p, k);
+        auto solver = CdSolver(v, k);
 
-    vector<size_t> sol = solver.get_solution(n, k);
+        vector<size_t> sol = solver.get_solution(n, k);
 
-    for (size_t s: sol) {
-        cout << v[s] << " "; 
+        for (size_t s: sol) {
+            cout << v[s] << " "; 
+        }
+
+        cout << "sum:" << solver.get_value(n, k) << "\n";
     }
 }
