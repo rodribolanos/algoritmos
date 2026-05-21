@@ -33,3 +33,27 @@ int main() {
 
     cout << comb(n, x) << "\n";
 }
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int n, x;
+    cin >> n >> x;                       // n tipos de monedas, suma objetivo x
+
+    vector<int> coins(n);
+    for (int &c : coins) cin >> c;       // valores de cada moneda
+
+    vector<int> dp(x + 1, 0);            // dp[w] = cantidad de formas de formar suma w
+    dp[0] = 1;                           // base: hay 1 forma de formar 0 (no usar monedas)
+
+    for (int i = 0; i < n; i++) {        // recorrer cada moneda
+        for (int w = coins[i]; w <= x; w++) { // recorrer sumas posibles (de menor a mayor)
+            dp[w] = (dp[w] + dp[w - coins[i]]) % MOD; //casi misma cuenta que en minimizing coins, aca es lo importante
+            // formas de formar (w - coin[i]) usando esta moneda, no importa el orden, se repit
+        }
+    }
+
+    cout << dp[x] << '\n';               // resultado final: formas de formar x
+    return 0;
+}
