@@ -43,14 +43,17 @@ int main() {
         G.assign(k + 1, vector<long>());
         asignaciones.assign(k + 1, -1);
         long a, b;
-
+        possible = true;
         while (cin >> a >> b && a !=0 && b != 0 ) {
             G[a].push_back(b);
             G[b].push_back(a);
         }
 
         for (int v = 1; v < asignaciones.size(); v++) {
-            dfs(v, 0);
+            if (asignaciones[v] == -1) {
+                // si alguien lo llamo antes, no lo llamo para no tener marcar erroneos
+                dfs(v, 0);
+            }
         }
 
         if (possible) {

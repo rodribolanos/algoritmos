@@ -1,33 +1,26 @@
 #include <iostream>
-
+#include <set>
 #include <vector>
 #include <algorithm>
 using namespace std;
 
-struct Pelicula {
-    long end;
-    long start;
-    bool watched;
 
-    // Default sorting logic: sort by price
-    bool operator<(const Pelicula& other) const {
-        if (end == other.end) {
-            return start < other.start;
-        } else {
-            return end < other.end;
-        }        
-    }
-};
-
-long cantPeliculas(vector<Pelicula>& peliculas) {
-    long limit = 0;
+long cantPeliculas(vector<pair<long, long>>& peliculas, multiset<long>& personas) {
     long cantPeliculas = 0;
 
-    for (Pelicula movie: peliculas) {
-        if (!movie.watched && movie.start >= limit) {
-            limit = movie.end;
-            movie.watched = true;
-            cantPeliculas++; 
+    for (pair<long, long> movie: peliculas) {
+
+        auto bestTime = personas.upper_bound(movie.second);
+        // si el primero es el mayor o igual, no hay nadie que la pueda ver
+        if (bestTime != personas.begin()) {
+            // si existe aumento peliculas y muevo los elementos
+            cantPeliculas++; // aumento la cantidad de peliculas
+            // a esta altura esta el correcto
+            bestTime--;
+            // actualizar el tiempo para respetar el invariante
+            personas.erase(bestTime);
+            // como peliculas esta ordenado, pusheo al final para seguir el invariante
+            personas.insert(movie.first);    
         }
     }
 
@@ -35,25 +28,34 @@ long cantPeliculas(vector<Pelicula>& peliculas) {
 }
 
 int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
     long n, k; cin >> n >> k;
-
-    vector<Pelicula> movies(n);
-
+    // personas representa una cola con los tiempos donde terminan sus peliculas cada personas.
+    // si hay 2 personas viendo una pelicula que termina en 5, y hay uno que no ve nada, la lista se vera 0 5 5
+    multiset<long> personas;
+    vector<pair<long, long>> movies(n);
+    
     for (int i = 0; i < n; i++) {
         long a, b;
         cin >> a >> b;
         // guardamos el fin primero para el ordenamiento lexicografico
-        movies[i] = {b, a, false};
+        movies[i] = {b, a};
     }
 
     // ordenamos
     sort(movies.begin(), movies.end());
 
-    long cantidadPeliculas = 0;
-    for (int i = 0; i < k; i++) {
-        cantidadPeliculas += cantPeliculas(movies);
+    for (int p = 0; p < k; p++) {
+        // pusheamos k 0s como timepos de las personas
+        personas.insert(0);
     }
 
-    cout << cantidadPeliculas << "\n";
+    long cantidadPeliculas = cantPeliculas(movies, personas);
+    
+
+    cout << cantidadPeliculas;
     return 0;
 }
